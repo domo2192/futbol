@@ -2,11 +2,11 @@ class GameStats
 
   def initialize
     @data_titles = []
+    @data = []
   end
 
   def read_file(filename)
     lines = File.readlines(filename)
-    require "pry"; binding.pry
   end
 
   def lines_split(lines)
@@ -19,4 +19,15 @@ class GameStats
     line.split(",")
   end
 
+  def key_maker(first_line)
+    @data_titles = first_line
+  end
+
+  def hash_maker(split_lines)
+    key_maker(split_lines[0])
+  end
+
+  def hash_iterator(data_lines)
+    
+  end
 end

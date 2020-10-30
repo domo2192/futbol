@@ -1,6 +1,6 @@
 
 require 'CSV'
-require './lib/team'
+require_relative './team'
 
 class TeamsRepo
   attr_reader :parent, :teams

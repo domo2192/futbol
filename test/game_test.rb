@@ -1,5 +1,5 @@
 require 'CSV'
-require 'minitest/autorun'
+require 'qminitest/autorun'
 require 'minitest/pride'
 require 'mocha/minitest'
 require './lib/stat_tracker'

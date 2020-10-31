@@ -85,6 +85,11 @@ class StatTracker
 
   def winningest_coach(season_id)
     game_ids = @games_repo.game_ids_by(season_id)
-      @game_teams_repo.coach_win_percentage(:max_by, game_ids)
+    @game_teams_repo.coach_win_percentage(:max_by, game_ids)
+  end
+
+  def worst_coach(season_id)
+    game_ids = @games_repo.game_ids_by(season_id)
+    @game_teams_repo.coach_win_percentage(:min_by, game_ids)
   end
 end

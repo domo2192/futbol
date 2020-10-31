@@ -87,4 +87,9 @@ class GameTeamsRepoTest < Minitest::Test
   def test_goals_to_shots_ratio
     assert_equal 0.25, @game_teams_repo.goals_to_shots_ratio(@game_teams_repo.game_teams[0..1])
   end
+
+  def test_accurate_team
+    assert_equal 5, @game_teams_repo.accurate_team(["2012030221","2012030222"], :max_by)
+
+  end
 end

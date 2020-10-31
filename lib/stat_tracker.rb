@@ -92,4 +92,16 @@ class StatTracker
     game_ids = @games_repo.game_ids_by(season_id)
     @game_teams_repo.coach_win_percentage(:min_by, game_ids)
   end
+
+  def most_accurate_team(season_id)
+    game_ids = @games_repo.game_ids_by(season_id)
+    id = @game_teams_repo.accurate_team(game_ids, :max_by)
+    @teams_repo.team_name(id)
+  end
+
+  def least_accurate_team(season_id)
+    game_ids = @games_repo.game_ids_by(season_id)
+    id = @game_teams_repo.accurate_team(game_ids, :min_by)
+    @teams_repo.team_name(id)
+  end
 end

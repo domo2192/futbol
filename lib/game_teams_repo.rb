@@ -101,4 +101,9 @@ class GameTeamsRepo
       game_team.team_id == team_id
     end.head_coach
   end
+
+  def win_percentage(subset_game_teams)
+    wins = games_containing(:result, "WIN", subset_game_teams)
+    (wins.count.to_f / subset_game_teams.count).round(2)
+  end
 end

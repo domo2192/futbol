@@ -114,7 +114,7 @@ require './lib/stat_tracker'
     assert_equal expected, @stat_tracker.average_goals_by_season
     end
 
-    def test_coach_best_win_percentage
-      assert_equal "", @stat_tracker.coach_win_percentage(:max_by)
+    def test_winningest_coach_by_season
+      assert_equal "Claude Julien", @stat_tracker.winningest_coach("20122013")
     end
   end

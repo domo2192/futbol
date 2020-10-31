@@ -78,8 +78,13 @@ class StatTracker
     @teams_repo.team_name(id)
   end
 
-  def lowest_scoring_home_team 
+  def lowest_scoring_home_team
     id = @game_teams_repo.lowest_average_hoa_goals("home")
     @teams_repo.team_name(id)
+  end
+
+  def winningest_coach(season_id)
+    game_ids = @games_repo.game_ids_by(season_id)
+      @game_teams_repo.coach_win_percentage(:max_by, game_ids)
   end
 end

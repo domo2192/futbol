@@ -65,4 +65,21 @@ class GameTeamsRepoTest < Minitest::Test
   def test_lowest_average_hoa_goals
     assert_equal 27, @game_teams_repo.lowest_average_hoa_goals("away")
   end
+
+  def test_it_can_return_coach_name
+    assert_equal "John Tortorella", @game_teams_repo.coach_name(3)
+  end
+
+  def test_win_percentage
+    games = @game_teams_repo.games_containing(:team_id, 3)
+    assert_equal 0.43, @game_teams_repo.win_percentage(games)
+  end
+
+  def test_coach_win_percentage
+    assert_equal "Gerard Gallant", @game_teams_repo.coach_win_percentage(:max_by,["2012030221","2012030222"])
+  end
+
+  def test_games_containing_array
+    assert_equal 4, @game_teams_repo.games_containing_array(["2012030221","2012030222"]).length
+  end
 end

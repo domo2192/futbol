@@ -69,7 +69,7 @@ class GameTeamsRepo
       average_hoa_goals_by_id(id, :hoa, hoa_value)
     end
   end
-  
+
   def lowest_average_goals
 
     ids = team_ids
@@ -84,6 +84,17 @@ class GameTeamsRepo
     end
   end
 
+  def games_containing_array(values)
+    games = []
+    values.each do |id|
+      result = @game_teams.find_all do |game_team|
+        game_team.game_id == id
+      end
+      games << result
+    end
+    games.flatten
+  end
+
   def percentage_wins(hoa)
     games = games_containing(:hoa, hoa)
     wins = games_containing(:result, "WIN", games).count.to_f
@@ -96,5 +107,27 @@ class GameTeamsRepo
     (ties / games.count).round(2)
   end
 
+  def coach_name(team_id)
+    @game_teams.find do |game_team|
+      game_team.team_id == team_id
+    end.head_coach
+  end
+
+  def win_percentage(subset_game_teams)
+    wins = games_containing(:result, "WIN", subset_game_teams)
+    (wins.count.to_f / subset_game_teams.count).round(2)
+  end
+
+  def coach_win_percentage(min_max_by, game_ids)
+    games = games_containing_array(game_ids)
+    team = team_ids.send(min_max_by) do |id|
+      games1 = games_containing(:team_id, id, games)
+      if games1 == []
+        0.50
+      else
+        win_percentage(games1)
+      end
+    end
+    coach_name(team)
+  end
 end
-#add percentage games stats methods

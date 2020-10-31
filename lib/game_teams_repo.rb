@@ -84,6 +84,17 @@ class GameTeamsRepo
     end
   end
 
+  def games_containing_array(values)
+    games = []
+    values.each do |id|
+      result = @game_teams.find_all do |game_team|
+        game_team.game_id == id
+      end
+      games << result
+    end
+    games.flatten
+  end
+
   def percentage_wins(hoa)
     games = games_containing(:hoa, hoa)
     wins = games_containing(:result, "WIN", games).count.to_f
@@ -107,7 +118,7 @@ class GameTeamsRepo
     (wins.count.to_f / subset_game_teams.count).round(2)
   end
 
-  def coach_win_percentage(min_max_by)
+  def coach_win_percentage(min_max_by, season_id)
     team = team_ids.send(min_max_by) do |id|
       games = games_containing(:team_id, id)
       win_percentage(games)

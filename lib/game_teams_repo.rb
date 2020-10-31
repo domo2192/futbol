@@ -141,4 +141,16 @@ class GameTeamsRepo
     end
     goals.to_f / shots
   end
+
+  def accurate_team(game_ids, min_max_by)
+    games = games_containing_array(game_ids)
+    team_ids.send(min_max_by) do |id|
+      games1 = games_containing(:team_id, id, games)
+      if games1 == []
+        0.50
+      else
+        goals_to_shots_ratio(games)
+      end
+    end
+  end
 end

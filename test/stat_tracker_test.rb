@@ -20,7 +20,6 @@ require './lib/stat_tracker'
         @stat_tracker = StatTracker.from_csv(locations)
     end
 
-
     def test_it_exisits_and_has_attributes
       assert_instance_of StatTracker, @stat_tracker
     end
@@ -113,5 +112,9 @@ require './lib/stat_tracker'
       "20172018"=>4.44
     }
     assert_equal expected, @stat_tracker.average_goals_by_season
+    end
+
+    def test_coach_best_win_percentage
+      assert_equal "", @stat_tracker.coach_win_percentage(:max_by)
     end
   end

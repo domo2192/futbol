@@ -69,7 +69,7 @@ class GameTeamsRepo
       average_hoa_goals_by_id(id, :hoa, hoa_value)
     end
   end
-  
+
   def lowest_average_goals
 
     ids = team_ids
@@ -96,5 +96,9 @@ class GameTeamsRepo
     (ties / games.count).round(2)
   end
 
+  def coach_name(team_id)
+    @game_teams.find do |game_team|
+      game_team.team_id == team_id
+    end.head_coach
+  end
 end
-#add percentage games stats methods

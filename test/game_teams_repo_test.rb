@@ -76,6 +76,10 @@ class GameTeamsRepoTest < Minitest::Test
   end
 
   def test_coach_win_percentage
-    assert_equal "Gerard Gallant", @game_teams_repo.coach_win_percentage(:max_by)
+    assert_equal "Gerard Gallant", @game_teams_repo.coach_win_percentage(:max_by, )
+  end
+
+  def test_games_containing_array
+    assert_equal 4, @game_teams_repo.games_containing_array(["2012030221","2012030222"]).length
   end
 end

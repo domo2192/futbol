@@ -1,5 +1,5 @@
 require 'CSV'
-require './lib/game'
+require_relative './game'
 class GamesRepo
   attr_reader :parent, :games
 

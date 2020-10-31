@@ -70,4 +70,8 @@ class GameTeamsRepoTest < Minitest::Test
     assert_equal "John Tortorella", @game_teams_repo.coach_name(3)
   end
 
+  def test_win_percentage
+    games = @game_teams_repo.games_containing(:team_id, 3)
+    assert_equal 0.50, @game_teams_repo.win_percentage(games)
+  end
 end

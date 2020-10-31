@@ -61,4 +61,8 @@ class GamesRepoTest < Minitest::Test
                 "20172018"=>4.44}
     assert_equal expected, @games_repo.average_goals_by_season
   end
+
+  def test_games_containing
+    assert_equal 1, @games_repo.games_containing(:game_id, "2012030221").length
+  end
 end

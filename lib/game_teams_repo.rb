@@ -147,9 +147,9 @@ class GameTeamsRepo
     team_ids.send(min_max_by) do |id|
       games1 = games_containing(:team_id, id, games)
       if games1 == []
-        0.50
+        0.33
       else
-        goals_to_shots_ratio(games)
+        goals_to_shots_ratio(games1)
       end
     end
   end

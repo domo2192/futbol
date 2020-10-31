@@ -71,4 +71,13 @@ class GamesRepo
       game.send(header) == value
     end
   end
+
+  def game_ids_by(season_id)
+    games = games_containing(:season, season_id)
+    game_ids = []
+    games.each do |game|
+      game_ids << game.game_id
+    end
+    game_ids
+  end
 end

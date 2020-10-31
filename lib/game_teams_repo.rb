@@ -128,6 +128,17 @@ class GameTeamsRepo
         win_percentage(games1)
       end
     end
+    #this needs to call method to get coach of season
     coach_name(team)
+  end
+
+  def goals_to_shots_ratio(games)
+    goals = games.sum do |game|
+      game.goals 
+    end
+    shots = games.sum do |game|
+      game.shots 
+    end
+    goals.to_f / shots
   end
 end

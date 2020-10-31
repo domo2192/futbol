@@ -65,4 +65,9 @@ class GameTeamsRepoTest < Minitest::Test
   def test_lowest_average_hoa_goals
     assert_equal 27, @game_teams_repo.lowest_average_hoa_goals("away")
   end
+
+  def test_it_can_return_coach_name
+    assert_equal "John Tortorella", @game_teams_repo.coach_name(3)
+  end
+
 end

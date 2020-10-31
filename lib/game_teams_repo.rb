@@ -118,10 +118,15 @@ class GameTeamsRepo
     (wins.count.to_f / subset_game_teams.count).round(2)
   end
 
-  def coach_win_percentage(min_max_by, season_id)
+  def coach_win_percentage(min_max_by, game_ids)
+    games = games_containing_array(game_ids)
     team = team_ids.send(min_max_by) do |id|
-      games = games_containing(:team_id, id)
-      win_percentage(games)
+      games1 = games_containing(:team_id, id, games)
+      if games1 == []
+        0.50
+      else
+        win_percentage(games1)
+      end
     end
     coach_name(team)
   end

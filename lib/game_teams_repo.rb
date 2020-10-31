@@ -106,4 +106,12 @@ class GameTeamsRepo
     wins = games_containing(:result, "WIN", subset_game_teams)
     (wins.count.to_f / subset_game_teams.count).round(2)
   end
+
+  def coach_win_percentage(min_max_by)
+    team = team_ids.send(min_max_by) do |id|
+      games = games_containing(:team_id, id)
+      win_percentage(games)
+    end
+    coach_name(team)
+  end
 end

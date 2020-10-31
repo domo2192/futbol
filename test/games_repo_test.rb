@@ -65,4 +65,8 @@ class GamesRepoTest < Minitest::Test
   def test_games_containing
     assert_equal 1, @games_repo.games_containing(:game_id, "2012030221").length
   end
+
+  def test_game_ids_by
+    assert_equal 806, @games_repo.game_ids_by("20122013").length
+  end
 end

@@ -74,4 +74,8 @@ class GameTeamsRepoTest < Minitest::Test
     games = @game_teams_repo.games_containing(:team_id, 3)
     assert_equal 0.43, @game_teams_repo.win_percentage(games)
   end
+
+  def test_coach_win_percentage
+    assert_equal "", @game_teams_repo.coach_win_percentage(:max_by)
+  end
 end

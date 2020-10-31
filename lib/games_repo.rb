@@ -65,4 +65,10 @@ class GamesRepo
     end
     hash
   end
+
+  def games_containing(header, value, games = @games)
+    games.select do |game|
+      game.send(header) == value
+    end
+  end
 end

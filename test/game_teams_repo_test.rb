@@ -112,4 +112,9 @@ class GameTeamsRepoTest < Minitest::Test
     hash = {"1" => ["2012030221","2012030222"]}
     assert_equal "1", @game_teams_repo.win_percentage_season(1, :max_by, hash)
   end
+
+  def test_highest_and_lowest_goals 
+    assert_equal 7, @game_teams_repo.highest_and_lowest_goals(18, :max_by)
+    assert_equal 0, @game_teams_repo.highest_and_lowest_goals(18, :min_by)
+  end
 end

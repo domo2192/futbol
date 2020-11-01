@@ -71,7 +71,6 @@ class GameTeamsRepo
   end
 
   def lowest_average_goals
-
     ids = team_ids
     ids.min_by do |id|
       average_goals_by(id)
@@ -185,5 +184,14 @@ class GameTeamsRepo
        games = games_containing(:team_id, team_id, games)
        win_percentage(games)
      end.first
+  end
+
+  def highest_and_lowest_goals(id, max_min_by)
+      team_games = find_team_by(id)
+      goals = []
+      total_goals = team_games.each do |team_game|
+       goals << team_game.goals
+    end
+    goals.send(max_min_by) {|goal| goal}
   end
 end

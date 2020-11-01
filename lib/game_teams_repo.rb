@@ -161,7 +161,6 @@ class GameTeamsRepo
     end
   end
 
-  # tackles method takes a subset of games, and returns an integer sum of all tackles.
   def tackles(games)
     games.sum do |game|
       game.tackles
@@ -170,7 +169,6 @@ class GameTeamsRepo
 
   def tackles_by_team(game_ids, min_max_by)
     games = games_containing_array(game_ids)
-    # team_ids = [6 , 75, 3...]
     team_ids.send(min_max_by) do |id|
       games1 = games_containing(:team_id, id, games)
       if games1 == []

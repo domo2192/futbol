@@ -129,4 +129,12 @@ require './lib/stat_tracker'
     def test_least_accurate_team
       assert_equal "New York City FC", @stat_tracker.least_accurate_team("20132014")
     end
+
+    def test_most_tackles
+      assert_equal "FC Cincinnati", @stat_tracker.most_tackles("20132014") 
+    end
+
+    def test_fewest_tackles
+      assert_equal "Atlanta United", @stat_tracker.fewest_tackles("20132014")
+    end
   end

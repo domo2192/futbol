@@ -97,4 +97,10 @@ class GameTeamsRepoTest < Minitest::Test
     game = @game_teams_repo.game_teams[0]
     assert_equal ["John Tortorella"], @game_teams_repo.coaches([game])
   end
+
+  def test_it_can_calculate_tackles
+    game = @game_teams_repo.game_teams[0]
+
+    assert_equal 44, @game_teams_repo.tackles([games])
+  end
 end

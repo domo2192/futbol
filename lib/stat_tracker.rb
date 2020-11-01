@@ -131,4 +131,12 @@ class StatTracker
     games = @game_teams_repo.games_containing(:team_id, team_id)
     @game_teams_repo.win_percentage(games)
   end
+
+  def most_goals_scored(team_id)
+    @game_teams_repo.highest_and_lowest_goals(team_id, :max_by)
+  end
+  
+  def fewest_goals_scored(team_id)
+    @game_teams_repo.highest_and_lowest_goals(team_id, :min_by)
+  end
 end

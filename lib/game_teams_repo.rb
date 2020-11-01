@@ -160,4 +160,22 @@ class GameTeamsRepo
       end
     end
   end
+
+  def tackles(games)
+    games.sum do |game|
+      game.tackles
+    end
+  end
+
+  def tackles_by_team(game_ids, min_max_by)
+    games = games_containing_array(game_ids)
+    team_ids.send(min_max_by) do |id|
+      games1 = games_containing(:team_id, id, games)
+      if games1 == []
+        2500
+      else
+        tackles(games1) 
+      end
+    end
+  end
 end

@@ -104,4 +104,16 @@ class StatTracker
     id = @game_teams_repo.accurate_team(game_ids, :min_by)
     @teams_repo.team_name(id)
   end
+
+  def most_tackles(season_id)
+    game_ids = @games_repo.game_ids_by(season_id)
+    id = @game_teams_repo.tackles_by_team(game_ids, :max_by)
+    @teams_repo.team_name(id)
+  end
+
+  def fewest_tackles(season_id)
+    game_ids = @games_repo.game_ids_by(season_id)
+    id = @game_teams_repo.tackles_by_team(game_ids, :min_by)
+    @teams_repo.team_name(id)
+  end
 end

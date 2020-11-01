@@ -32,4 +32,15 @@ class TeamsRepoTest < Minitest::Test
   def test_team_name
     assert_equal "Reign FC", @teams_repo.team_name(54)
   end
+
+  def test_team_info
+    expected = {
+        :team_id=>1,
+        :franchise_id=>23,
+        :team_name=>"Atlanta United",
+        :abbreviation=>"ATL",
+        :link=>"/api/v1/teams/1"
+    }
+    assert_equal expected, @teams_repo.team_info(1)
+  end
 end

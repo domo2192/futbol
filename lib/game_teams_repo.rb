@@ -118,7 +118,7 @@ class GameTeamsRepo
     (wins.count.to_f / subset_game_teams.count).round(2)
   end
 
-  def coaches(games) 
+  def coaches(games)
     coach_list = []
     games.each do |game|
       coach_list << game.head_coach
@@ -141,10 +141,10 @@ class GameTeamsRepo
 
   def goals_to_shots_ratio(games)
     goals = games.sum do |game|
-      game.goals 
+      game.goals
     end
     shots = games.sum do |game|
-      game.shots 
+      game.shots
     end
     goals.to_f / shots
   end
@@ -174,8 +174,16 @@ class GameTeamsRepo
       if games1 == []
         2500
       else
-        tackles(games1) 
+        tackles(games1)
       end
     end
+  end
+
+  def win_percentage_season(team_id, max_min_by, all_seasons_games)
+    all_seasons_games.send(max_min_by) do |season, season_games|
+       games = games_containing_array(season_games)
+       games = games_containing(:team_id, team_id, games)
+       win_percentage(games)
+     end.first
   end
 end

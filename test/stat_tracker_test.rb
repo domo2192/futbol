@@ -131,10 +131,18 @@ require './lib/stat_tracker'
     end
 
     def test_most_tackles
-      assert_equal "FC Cincinnati", @stat_tracker.most_tackles("20132014") 
+      assert_equal "FC Cincinnati", @stat_tracker.most_tackles("20132014")
     end
 
     def test_fewest_tackles
       assert_equal "Atlanta United", @stat_tracker.fewest_tackles("20132014")
     end
+
+    def test_best_season
+      assert_equal "20132014", @stat_tracker.best_season(6)
+    end
+
+    def test_worst_season
+      assert_equal "20142015", @stat_tracker.worst_season(6)
+    end 
   end

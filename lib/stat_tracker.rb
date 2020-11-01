@@ -116,4 +116,14 @@ class StatTracker
     id = @game_teams_repo.tackles_by_team(game_ids, :min_by)
     @teams_repo.team_name(id)
   end
+
+  def best_season(team_id)
+    temp = @games_repo.all_games_by_season
+    @game_teams_repo.win_percentage_season(team_id, :max_by, temp)
+  end
+
+  def worst_season(team_id)
+    temp = @games_repo.all_games_by_season
+    @game_teams_repo.win_percentage_season(team_id, :min_by, temp)
+  end
 end

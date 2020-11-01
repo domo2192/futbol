@@ -126,4 +126,9 @@ class StatTracker
     temp = @games_repo.all_games_by_season
     @game_teams_repo.win_percentage_season(team_id, :min_by, temp)
   end
+
+  def average_win_percentage(team_id)
+    games = @game_teams_repo.games_containing(:team_id, team_id)
+    @game_teams_repo.win_percentage(games)
+  end
 end

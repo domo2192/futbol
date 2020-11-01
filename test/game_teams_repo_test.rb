@@ -92,7 +92,7 @@ class GameTeamsRepoTest < Minitest::Test
     assert_equal 5, @game_teams_repo.accurate_team(["2012030221","2012030222"], :max_by)
 
   end
-  
+
   def test_coaches
     game = @game_teams_repo.game_teams[0]
     assert_equal ["John Tortorella"], @game_teams_repo.coaches([game])
@@ -105,6 +105,11 @@ class GameTeamsRepoTest < Minitest::Test
   end
 
   def test_tackles_by_team
-    assert_equal 6, @game_teams_repo.tackles_by_team(["2012030221","2012030222"], :max_by)
+    assert_equal 5, @game_teams_repo.tackles_by_team(["2012030221","2012030222"], :max_by)
+  end
+
+  def test_win_percentage_season
+    hash = {"1" => ["2012030221","2012030222"]}
+    assert_equal "1", @game_teams_repo.win_percentage_season(1, :max_by, hash)
   end
 end

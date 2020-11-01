@@ -173,7 +173,11 @@ class GameTeamsRepo
     # team_ids = [6 , 75, 3...]
     team_ids.send(min_max_by) do |id|
       games1 = games_containing(:team_id, id, games)
-      tackles(games1)
+      if games1 == []
+        2500
+      else
+        tackles(games1) 
+      end
     end
   end
 end

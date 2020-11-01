@@ -167,4 +167,13 @@ class GameTeamsRepo
       game.tackles
     end
   end
+
+  def tackles_by_team(game_ids, min_max_by)
+    games = games_containing_array(game_ids)
+    # team_ids = [6 , 75, 3...]
+    team_ids.send(min_max_by) do |id|
+      games1 = games_containing(:team_id, id, games)
+      tackles(games1)
+    end
+  end
 end

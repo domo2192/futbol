@@ -80,4 +80,20 @@ class GamesRepo
     end
     game_ids
   end
+
+  def season_collection
+    seasons = []
+    games.each do |game|
+      seasons << game.season
+    end
+    seasons = seasons.uniq
+  end
+
+  def all_games_by_season
+    season_hash = {}
+    season_collection.each do |season|
+      season_hash[season] =  game_ids_by(season)
+    end
+    season_hash
+  end
 end

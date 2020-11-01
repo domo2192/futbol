@@ -69,4 +69,12 @@ class GamesRepoTest < Minitest::Test
   def test_game_ids_by
     assert_equal 806, @games_repo.game_ids_by("20122013").length
   end
+
+  def test_season_collection
+    assert_instance_of Array, @games_repo.season_collection
+  end
+
+  def test_all_games_by_season
+    assert_instance_of Array, @games_repo.all_games_by_season
+  end
 end

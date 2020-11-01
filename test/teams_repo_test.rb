@@ -35,7 +35,7 @@ class TeamsRepoTest < Minitest::Test
 
   def test_team_info
     expected = {
-      :team_id=>1,
+        :team_id=>1,
         :franchise_id=>23,
         :team_name=>"Atlanta United",
         :abbreviation=>"ATL",

@@ -76,10 +76,25 @@ class GameTeamsRepoTest < Minitest::Test
   end
 
   def test_coach_win_percentage
-    assert_equal "Gerard Gallant", @game_teams_repo.coach_win_percentage(:max_by,["2012030221","2012030222"])
+    # skip
+    assert_equal "Claude Julien", @game_teams_repo.coach_win_percentage(:max_by,["2012030221","2012030222"])
   end
 
   def test_games_containing_array
     assert_equal 4, @game_teams_repo.games_containing_array(["2012030221","2012030222"]).length
+  end
+
+  def test_goals_to_shots_ratio
+    assert_equal 0.25, @game_teams_repo.goals_to_shots_ratio(@game_teams_repo.game_teams[0..1])
+  end
+
+  def test_accurate_team
+    assert_equal 5, @game_teams_repo.accurate_team(["2012030221","2012030222"], :max_by)
+
+  end
+  
+  def test_coaches
+    game = @game_teams_repo.game_teams[0]
+    assert_equal ["John Tortorella"], @game_teams_repo.coaches([game])
   end
 end

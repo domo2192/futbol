@@ -103,4 +103,8 @@ class GameTeamsRepoTest < Minitest::Test
 
     assert_equal 44, @game_teams_repo.tackles([game])
   end
+
+  def test_tackles_by_team
+    assert_equal 6, @game_teams_repo.tackles_by_team(["2012030221","2012030222"], :max_by)
+  end
 end

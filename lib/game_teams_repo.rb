@@ -123,7 +123,7 @@ class GameTeamsRepo
     games.each do |game|
       coach_list << game.head_coach
     end
-    coach_list
+    coach_list.uniq
   end
 
   def coach_win_percentage(min_max_by, game_ids)

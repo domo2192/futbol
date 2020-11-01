@@ -101,6 +101,6 @@ class GameTeamsRepoTest < Minitest::Test
   def test_it_can_calculate_tackles
     game = @game_teams_repo.game_teams[0]
 
-    assert_equal 44, @game_teams_repo.tackles([games])
+    assert_equal 44, @game_teams_repo.tackles([game])
   end
 end

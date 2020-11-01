@@ -160,4 +160,11 @@ class GameTeamsRepo
       end
     end
   end
+
+  # tackles method takes a subset of games, and returns an integer sum of all tackles.
+  def tackles(games)
+    games.sum do |game|
+      game.tackles
+    end
+  end
 end

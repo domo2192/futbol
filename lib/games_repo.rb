@@ -1,5 +1,6 @@
 require 'CSV'
 require_relative './game'
+require_relative './rival'
 class GamesRepo
   attr_reader :parent, :games, :rival_games
 
@@ -101,7 +102,8 @@ class GamesRepo
   def favorite_opponent(team_id, team_ids, min_max_by)
     away_games = games_containing(:away_team_id,team_id)
     home_games = games_containing(:home_team_id, team_id)
-    other_teams = team_ids.delete(team_id)
+    team_ids.delete(team_id)
+    other_teams = team_ids
     away_games_shoveler(away_games)
     home_games_shoveler(home_games)
     other_teams.send(min_max_by) do |opponent|

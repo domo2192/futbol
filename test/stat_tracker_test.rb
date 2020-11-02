@@ -27,32 +27,26 @@ require './lib/stat_tracker'
     end
 
     def test_best_offense
-      #skip
       assert_equal "Reign FC", @stat_tracker.best_offense
     end
 
     def test_worst_offense
-      #skip
       assert_equal "Utah Royals FC", @stat_tracker.worst_offense
     end
 
     def test_highest_scoring_visitor
-      #skip
      assert_equal "FC Dallas", @stat_tracker.highest_scoring_visitor
     end
 
     def test_highest_scoring_team
-      #skip
       assert_equal "Reign FC", @stat_tracker.highest_scoring_home_team
     end
 
     def test_lowest_scoring_visitor
-      #skip
       assert_equal "San Jose Earthquakes", @stat_tracker.lowest_scoring_visitor
     end
 
     def test_lowest_scoring_home_team
-      #skip
       assert_equal "Utah Royals FC", @stat_tracker.lowest_scoring_home_team
     end
 
@@ -68,18 +62,15 @@ require './lib/stat_tracker'
     end
 
     def test_percentage_home_wins
-      #skip
     expected = 0.44
     assert_equal expected, @stat_tracker.percentage_home_wins
     end
 
     def test_percentage_visitor_wins
-      #skip
     assert_equal 0.36 , @stat_tracker.percentage_visitor_wins
     end
 
     def test_percentage_ties
-      #skip
     assert_equal 0.20 , @stat_tracker.percentage_ties
     end
 

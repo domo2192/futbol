@@ -6,5 +6,5 @@ class Rival
     @result = result
   end
 
-  de
+  
 end

@@ -113,14 +113,14 @@ class GamesRepo
   end
 
   def away_games_shoveler(away_games)
-     away_games.each do |away_game|
+    away_games.each do |away_game|
       rival_games << Rival.new(away_game.away_team_id, away_game.home_team_id, result(away_game.away_goals,away_game.home_goals))
     end
   end
 
   def home_games_shoveler(home_games)
     home_games.each do |home_game|
-     rival_games << Rival.new(home_game.home_team_id, home_game.away_team_id, result(home_game.home_goals,home_game.away_goals))
+      rival_games << Rival.new(home_game.home_team_id, home_game.away_team_id, result(home_game.home_goals,home_game.away_goals))
     end
   end
 

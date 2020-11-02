@@ -33,11 +33,11 @@ class TeamsRepo
       id == team.team_id
     end
     team_information = {
-      team_id: team.team_id,
-      franchise_id: team.franchise_id,
-      team_name: team.team_name,
-      abbreviation: team.abbreviation,
-      link: team.link
+      "team_id" => team.team_id.to_s,
+      "franchise_id" => team.franchise_id.to_s,
+      "team_name" => team.team_name,
+      "abbreviation" => team.abbreviation,
+      "link" => team.link
     }
   end
 end

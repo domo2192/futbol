@@ -159,7 +159,7 @@ require './lib/stat_tracker'
     end
 
     def test_favorite_opponent
-      assert_equal "DC United", @stat_tracker.favourite_opponent("18")
+      assert_equal "DC United", @stat_tracker.favorite_opponent("18")
     end
 
     def test_rival

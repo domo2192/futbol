@@ -118,25 +118,44 @@ class StatTracker
   end
 
   def best_season(team_id)
+    team_id = team_id.to_i
     temp = @games_repo.all_games_by_season
     @game_teams_repo.win_percentage_season(team_id, :max_by, temp)
   end
 
   def worst_season(team_id)
+    team_id = team_id.to_i
     temp = @games_repo.all_games_by_season
     @game_teams_repo.win_percentage_season(team_id, :min_by, temp)
   end
 
   def average_win_percentage(team_id)
+    team_id = team_id.to_i
     games = @game_teams_repo.games_containing(:team_id, team_id)
     @game_teams_repo.win_percentage(games)
   end
 
   def most_goals_scored(team_id)
+    team_id = team_id.to_i
     @game_teams_repo.highest_and_lowest_goals(team_id, :max_by)
   end
   
   def fewest_goals_scored(team_id)
+    team_id = team_id.to_i
     @game_teams_repo.highest_and_lowest_goals(team_id, :min_by)
+  end
+
+  def favorite_opponent(team_id)
+    team_id = team_id.to_i
+    team_ids = @game_teams_repo.team_ids
+    favorite = @games_repo.favorite_opponent(team_id, team_ids, :max_by)
+    @teams_repo.team_name(favorite)
+  end
+
+  def rival(team_id)
+    team_id = team_id.to_i
+    team_ids = @game_teams_repo.team_ids
+    rival = @games_repo.favorite_opponent(team_id, team_ids, :min_by)
+    @teams_repo.team_name(rival)
   end
 end

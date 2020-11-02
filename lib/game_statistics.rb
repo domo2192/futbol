@@ -63,4 +63,11 @@ class GameStats
   def percentage_ties
     percentage_results("home", "TIE")
   end
+
+  def team_stats(header, data_value)
+    temp = @stats
+    temp.delete_if do |row|
+      row[header] != data_value
+    end
+  end
 end

@@ -76,7 +76,7 @@ class GamesRepoTest < Minitest::Test
   end
 
   def test_all_games_by_season
-    assert_instance_of Array, @games_repo.all_games_by_season
+    assert_instance_of Hash, @games_repo.all_games_by_season
   end
 
   def test_home_game_and_away_game_shovelers
@@ -99,6 +99,7 @@ class GamesRepoTest < Minitest::Test
 
   def test_win_percentage
     games = @games_repo.games_containing(:home_team_id, 3)
-    assert_equal 0.43, @games_repo.win_percentage(games)
+    @games_repo.away_games_shoveler(games)
+    assert_equal 0.38, @games_repo.win_percentage(@games_repo.rival_games)
   end
 end

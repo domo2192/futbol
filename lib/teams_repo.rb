@@ -10,7 +10,7 @@ class TeamsRepo
     @teams = create_teams(path)
   end
 
-  def create_teams(path)1
+  def create_teams(path)
     rows = CSV.readlines(path, headers: :true , header_converters: :symbol)
 
     rows.map do |row|

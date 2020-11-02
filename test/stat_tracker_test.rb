@@ -165,4 +165,15 @@ require './lib/stat_tracker'
     def test_rival
       assert_equal "Houston Dash", @stat_tracker.rival("18")
     end
+
+    def test_team_info
+      expected = {
+        "team_id" => "18",
+        "franchise_id" => "34",
+        "team_name" => "Minnesota United FC",
+        "abbreviation" => "MIN",
+        "link" => "/api/v1/teams/18"
+      }
+      assert_equal expected, @stat_tracker.team_info("18")
+    end
   end

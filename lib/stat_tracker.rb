@@ -7,9 +7,9 @@ class StatTracker
   attr_reader :games_repo, :teams_repo, :game_teams_repo
 
   def initialize(locations)
-    @games_repo = GamesRepo.new(locations[:game_path], self)
-    @teams_repo = TeamsRepo.new(locations[:teams_path], self)
-    @game_teams_repo = GameTeamsRepo.new(locations[:game_teams_path], self)
+    @games_repo = GamesRepo.new(locations[:games], self)
+    @teams_repo = TeamsRepo.new(locations[:teams], self)
+    @game_teams_repo = GameTeamsRepo.new(locations[:game_teams], self)
 
   end
 

@@ -8,7 +8,6 @@ require './lib/game'
 
 class GameTest < Minitest::Test
   def setup
-
     row = CSV.readlines('./data/games.csv', headers: :true, header_converters: :symbol)[0]
     @parent = mock('game_repo')
     @game1 = Game.new(row, @parent)

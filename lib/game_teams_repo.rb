@@ -10,7 +10,7 @@ class GameTeamsRepo
   end
 
   def create_game_teams(path)
-    rows = CSV.readlines('./data/game_teams.csv', headers: :true , header_converters: :symbol)
+    rows = CSV.readlines(path, headers: :true , header_converters: :symbol)
 
     rows.map do |row|
       GameTeams.new(row, self)
@@ -187,9 +187,9 @@ class GameTeamsRepo
   end
 
   def highest_and_lowest_goals(id, max_min_by)
-      team_games = find_team_by(id)
-      goals = []
-      total_goals = team_games.each do |team_game|
+    team_games = find_team_by(id)
+    goals = []
+    total_goals = team_games.each do |team_game|
        goals << team_game.goals
     end
     goals.send(max_min_by) {|goal| goal}

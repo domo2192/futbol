@@ -4,6 +4,7 @@ require './lib/stat_tracker'
 require './lib/games_repo'
 require 'mocha/minitest'
 require './lib/game'
+require './lib/rival'
 
 class GamesRepoTest < Minitest::Test
   def setup
@@ -75,6 +76,30 @@ class GamesRepoTest < Minitest::Test
   end
 
   def test_all_games_by_season
-    assert_instance_of Array, @games_repo.all_games_by_season
+    assert_instance_of Hash, @games_repo.all_games_by_season
+  end
+
+  def test_home_game_and_away_game_shovelers
+    away_games = @games_repo.games_containing(:away_team_id,7)
+    home_games = @games_repo.games_containing(:home_team_id, 7)
+    assert_instance_of Array, @games_repo.away_games_shoveler(away_games)
+    assert_instance_of Array, @games_repo.home_games_shoveler(home_games)
+  end
+
+  def test_favorite_opponent
+    team_ids = [7,14,18]
+    assert_equal 14, @games_repo.favorite_opponent(18,team_ids,:max_by)
+  end
+
+  def test_result
+    assert_equal "WIN", @games_repo.result(10, 2)
+    assert_equal "LOSS", @games_repo.result(2, 10)
+    assert_equal "TIE", @games_repo.result(5,5)
+  end
+
+  def test_win_percentage
+    games = @games_repo.games_containing(:home_team_id, 3)
+    @games_repo.away_games_shoveler(games)
+    assert_equal 0.38, @games_repo.win_percentage(@games_repo.rival_games)
   end
 end

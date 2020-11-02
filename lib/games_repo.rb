@@ -1,11 +1,13 @@
 require 'CSV'
 require_relative './game'
+require_relative './rival'
 class GamesRepo
-  attr_reader :parent, :games
+  attr_reader :parent, :games, :rival_games
 
   def initialize(path, parent)
     @parent = parent
     @games = create_games(path)
+    @rival_games = []
   end
 
   def create_games(path)
@@ -95,5 +97,45 @@ class GamesRepo
       season_hash[season] =  game_ids_by(season)
     end
     season_hash
+  end
+
+  def favorite_opponent(team_id, team_ids, min_max_by)
+    away_games = games_containing(:away_team_id,team_id)
+    home_games = games_containing(:home_team_id, team_id)
+    team_ids.delete(team_id)
+    other_teams = team_ids
+    away_games_shoveler(away_games)
+    home_games_shoveler(home_games)
+    other_teams.send(min_max_by) do |opponent|
+      games = games_containing(:opponent_id, opponent, @rival_games)
+      win_percentage(games)
+    end
+  end
+
+  def away_games_shoveler(away_games)
+     away_games.each do |away_game|
+      rival_games << Rival.new(away_game.away_team_id, away_game.home_team_id, result(away_game.away_goals,away_game.home_goals))
+    end
+  end
+
+  def home_games_shoveler(home_games)
+    home_games.each do |home_game|
+     rival_games << Rival.new(home_game.home_team_id, home_game.away_team_id, result(home_game.home_goals,home_game.away_goals))
+    end
+  end
+
+  def result(our_goals, opponents_goals)
+    if our_goals > opponents_goals
+      "WIN"
+    elsif our_goals == opponents_goals
+      "TIE"
+    else
+      "LOSS"
+    end
+  end
+
+  def win_percentage(subset_game_teams)
+    wins = games_containing(:result, "WIN", subset_game_teams)
+    (wins.count.to_f / subset_game_teams.count).round(2)
   end
 end

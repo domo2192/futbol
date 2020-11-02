@@ -158,4 +158,9 @@ class StatTracker
     rival = @games_repo.favorite_opponent(team_id, team_ids, :min_by)
     @teams_repo.team_name(rival)
   end
+
+  def team_info(team_id)
+    team_id = team_id.to_i
+    @teams_repo.team_info(team_id)
+  end
 end

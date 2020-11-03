@@ -131,7 +131,7 @@ class StatTracker
 
   def average_win_percentage(team_id)
     team_id = team_id.to_i
-    games = @game_teams_repo.games_containing(:team_id, team_id)
+    games = @game_teams_repo.games_containing(:team_id, team_id, @game_teams_repo.game_teams)
     @game_teams_repo.win_percentage(games)
   end
 

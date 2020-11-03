@@ -29,10 +29,10 @@ class TeamsRepo
   end
 
   def team_info(id)
-    team = @teams.find do |team|
-      id == team.team_id
+    team = @teams.find do |the_team|
+      id == the_team.team_id
     end
-    team_information = {
+    {
       "team_id" => team.team_id.to_s,
       "franchise_id" => team.franchise_id.to_s,
       "team_name" => team.team_name,

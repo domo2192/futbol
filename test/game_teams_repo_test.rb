@@ -1,5 +1,4 @@
-require 'minitest/autorun'
-require 'minitest/pride'
+require './test/test_helper'
 require './lib/stat_tracker'
 require 'mocha/minitest'
 require './lib/game_teams_repo'
@@ -7,7 +6,6 @@ require './lib/game_teams_repo'
 class GameTeamsRepoTest < Minitest::Test
   def setup
     game_teams_path = './data/game_teams.csv'
-
     locations = {
       game_teams: game_teams_path
     }
@@ -94,7 +92,6 @@ class GameTeamsRepoTest < Minitest::Test
 
   def test_it_can_calculate_tackles
     game = @game_teams_repo.game_teams[0]
-
     assert_equal 44, @game_teams_repo.tackles([game])
   end
 
@@ -110,5 +107,9 @@ class GameTeamsRepoTest < Minitest::Test
   def test_highest_and_lowest_goals 
     assert_equal 7, @game_teams_repo.highest_and_lowest_goals(18, :max_by)
     assert_equal 0, @game_teams_repo.highest_and_lowest_goals(18, :min_by)
+  end
+
+  def test_average
+    assert_equal 0.25, @game_teams_repo.average(1, 4)
   end
 end

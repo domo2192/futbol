@@ -1,6 +1,5 @@
 require 'CSV'
-require 'minitest/autorun'
-require 'minitest/pride'
+require './test/test_helper'
 require 'mocha/minitest'
 require './lib/stat_tracker'
 require './lib/team'
@@ -22,9 +21,5 @@ class TeamTest < Minitest::Test
     assert_equal "ATL", @team1.abbreviation
     assert_equal "Mercedes-Benz Stadium", @team1.stadium
     assert mock(), @team1.parent
-  end
-
-  def test_count_of_teams
-    assert_equal 32, @game_teams_repo.count_of_teams
   end
 end

@@ -1,6 +1,5 @@
 require 'CSV'
-require 'qminitest/autorun'
-require 'minitest/pride'
+require './test/test_helper'
 require 'mocha/minitest'
 require './lib/stat_tracker'
 require './lib/games_repo'

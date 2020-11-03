@@ -129,7 +129,7 @@ class GameTeamsRepo
     shots = games.sum do |game|
       game.shots
     end
-    average(goals, shots)
+    goals.to_f / shots
   end
 
   def accurate_team(game_ids, min_max_by)

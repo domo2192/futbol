@@ -1,6 +1,9 @@
 require 'CSV'
 require_relative './game_teams'
+require_relative './mathable'
+
 class GameTeamsRepo
+  include Mathable
   attr_reader :parent,
               :game_teams
 
@@ -10,39 +13,32 @@ class GameTeamsRepo
   end
 
   def create_game_teams(path)
-    rows = CSV.readlines('./data/game_teams.csv', headers: :true , header_converters: :symbol)
+    rows = CSV.readlines(path, headers: :true , header_converters: :symbol)
 
     rows.map do |row|
       GameTeams.new(row, self)
     end
   end
 
-  def find_team_by(id)
-    @game_teams.find_all do |game_team|
-      game_team.team_id == id
-    end
-  end
-
   def average_goals_by(id)
-    team_games = find_team_by(id)
+    team_games = games_containing(:team_id, id, @game_teams)
     total_goals = team_games.sum do |team_game|
       team_game.goals
     end
-    (total_goals.to_f / team_games.count).round(2)
+    average(total_goals, team_games.count)
   end
 
   def average_hoa_goals_by_id(id, hoa, hoa_value)
-    hoa_games = games_containing(hoa, hoa_value)
+    hoa_games = games_containing(hoa, hoa_value, @game_teams)
     team_games = games_containing(:team_id, id, hoa_games)
     total_goals = team_games.sum do |team_game|
       team_game.goals
     end
-    (total_goals.to_f / team_games.count).round(2)
+    average(total_goals, team_games.count)
   end
 
   def team_ids
     team_ids = []
-
     @game_teams.each do |game_team|
       team_ids << game_team.team_id
     end
@@ -77,12 +73,6 @@ class GameTeamsRepo
     end
   end
 
-  def games_containing(header, value, games = @game_teams)
-    games.select do |game|
-      game.send(header) == value
-    end
-  end
-
   def games_containing_array(values)
     games = []
     values.each do |id|
@@ -95,26 +85,20 @@ class GameTeamsRepo
   end
 
   def percentage_wins(hoa)
-    games = games_containing(:hoa, hoa)
-    wins = games_containing(:result, "WIN", games).count.to_f
-    (wins / games.count).round(2)
+    games = games_containing(:hoa, hoa, @game_teams)
+    win_percentage(games)
   end
 
   def percentage_ties
-    games = games_containing(:hoa, "home")
+    games = games_containing(:hoa, "home", @game_teams)
     ties = games_containing(:result, "TIE", games).count.to_f
-    (ties / games.count).round(2)
+    average(ties, games.count)
   end
 
   def coach_name(team_id)
     @game_teams.find do |game_team|
       game_team.team_id == team_id
     end.head_coach
-  end
-
-  def win_percentage(subset_game_teams)
-    wins = games_containing(:result, "WIN", subset_game_teams)
-    (wins.count.to_f / subset_game_teams.count).round(2)
   end
 
   def coaches(games)
@@ -139,7 +123,7 @@ class GameTeamsRepo
   end
 
   def goals_to_shots_ratio(games)
-    goals = games.sum do |game|
+    goals = games.sum do |game|                                     ##
       game.goals
     end
     shots = games.sum do |game|
@@ -183,15 +167,13 @@ class GameTeamsRepo
        games = games_containing_array(season_games)
        games = games_containing(:team_id, team_id, games)
        win_percentage(games)
-     end.first
+    end.first
   end
 
   def highest_and_lowest_goals(id, max_min_by)
-      team_games = find_team_by(id)
-      goals = []
-      total_goals = team_games.each do |team_game|
-       goals << team_game.goals
-    end
-    goals.send(max_min_by) {|goal| goal}
+    team_games = games_containing(:team_id, id, @game_teams)
+    team_games.send(max_min_by) do |team_game|
+      team_game.goals
+    end.goals
   end
 end

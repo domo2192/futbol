@@ -1,5 +1,4 @@
-require 'minitest/autorun'
-require 'minitest/pride'
+require './test/test_helper'
 require './lib/stat_tracker'
 require 'mocha/minitest'
 require './lib/game_teams_repo'
@@ -7,12 +6,11 @@ require './lib/game_teams_repo'
 class GameTeamsRepoTest < Minitest::Test
   def setup
     game_teams_path = './data/game_teams.csv'
-
     locations = {
       game_teams: game_teams_path
     }
     @parent = mock()
-    @game_teams_repo = GameTeamsRepo.new(locations[:game_teams_path], @parent)
+    @game_teams_repo = GameTeamsRepo.new(locations[:game_teams], @parent)
   end
 
   def test_it_exists_and_has_attributes
@@ -22,10 +20,6 @@ class GameTeamsRepoTest < Minitest::Test
 
   def test_create_game_teams
     assert_instance_of GameTeams, @game_teams_repo.game_teams[0]
-  end
-
-  def test_find_team_by
-    assert_instance_of Array, @game_teams_repo.find_team_by(6)
   end
 
   def test_find_average_goals_by_id
@@ -42,7 +36,7 @@ class GameTeamsRepoTest < Minitest::Test
   end
 
   def test_games_containing
-    assert_equal 2, @game_teams_repo.games_containing(:game_id, "2012030221").length
+    assert_equal 2, @game_teams_repo.games_containing(:game_id, "2012030221", @game_teams_repo.game_teams).length
   end
 
   def test_percentage_wins
@@ -71,12 +65,11 @@ class GameTeamsRepoTest < Minitest::Test
   end
 
   def test_win_percentage
-    games = @game_teams_repo.games_containing(:team_id, 3)
+    games = @game_teams_repo.games_containing(:team_id, 3, @game_teams_repo.game_teams)
     assert_equal 0.43, @game_teams_repo.win_percentage(games)
   end
 
   def test_coach_win_percentage
-    # skip
     assert_equal "Claude Julien", @game_teams_repo.coach_win_percentage(:max_by,["2012030221","2012030222"])
   end
 
@@ -89,8 +82,7 @@ class GameTeamsRepoTest < Minitest::Test
   end
 
   def test_accurate_team
-    assert_equal 5, @game_teams_repo.accurate_team(["2012030221","2012030222"], :max_by)
-
+    assert_equal 6, @game_teams_repo.accurate_team(["2012030221","2012030222"], :max_by)
   end
 
   def test_coaches
@@ -100,7 +92,6 @@ class GameTeamsRepoTest < Minitest::Test
 
   def test_it_can_calculate_tackles
     game = @game_teams_repo.game_teams[0]
-
     assert_equal 44, @game_teams_repo.tackles([game])
   end
 
@@ -116,5 +107,9 @@ class GameTeamsRepoTest < Minitest::Test
   def test_highest_and_lowest_goals 
     assert_equal 7, @game_teams_repo.highest_and_lowest_goals(18, :max_by)
     assert_equal 0, @game_teams_repo.highest_and_lowest_goals(18, :min_by)
+  end
+
+  def test_average
+    assert_equal 0.25, @game_teams_repo.average(1, 4)
   end
 end

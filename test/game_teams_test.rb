@@ -1,6 +1,5 @@
 require 'CSV'
-require 'minitest/autorun'
-require 'minitest/pride'
+require './test/test_helper'
 require 'mocha/minitest'
 require './lib/stat_tracker'
 require './lib/game_teams_repo'
@@ -10,7 +9,7 @@ class GameTeamsTest < Minitest::Test
   def setup
     game_teams_path = './data/game_teams.csv'
     locations = {game_teams:game_teams_path}
-    row = CSV.readlines('./data/game_teams.csv', headers: :true, header_converters: :symbol)[0]
+    row = CSV.readlines(locations[:game_teams], headers: :true, header_converters: :symbol)[0]
     @parent = mock('game_teams_repo')
     @game_teams1 = GameTeams.new(row, @parent)
   end

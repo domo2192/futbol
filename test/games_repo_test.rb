@@ -1,5 +1,4 @@
-require 'minitest/autorun'
-require 'minitest/pride'
+require './test/test_helper'
 require './lib/stat_tracker'
 require './lib/games_repo'
 require 'mocha/minitest'
@@ -15,7 +14,7 @@ class GamesRepoTest < Minitest::Test
     }
     @parent = mock()
 
-    @games_repo = GamesRepo.new(locations[:game_path], @parent)
+    @games_repo = GamesRepo.new(locations[:games], @parent)
   end
 
   def test_it_exists_and_has_attributes
@@ -37,6 +36,17 @@ class GamesRepoTest < Minitest::Test
 
   def test_it_can_count_games_in_season
     assert_equal 806, @games_repo.count_of_games_in_season("20122013")
+  end
+
+  def test_average
+    assert_equal 0.50, @games_repo.average(2, 4)
+  end
+
+  def test_rival_games_filler
+    team_id = 3
+    @games_repo.rival_games_filler(team_id)
+
+    assert_equal 6, @games_repo.rival_games[0].opponent_id
   end
 
   def test_it_can_return_hash_games_by_season
@@ -64,7 +74,7 @@ class GamesRepoTest < Minitest::Test
   end
 
   def test_games_containing
-    assert_equal 1, @games_repo.games_containing(:game_id, "2012030221").length
+    assert_equal 1, @games_repo.games_containing(:game_id, "2012030221",@games_repo.games).length
   end
 
   def test_game_ids_by
@@ -80,8 +90,8 @@ class GamesRepoTest < Minitest::Test
   end
 
   def test_home_game_and_away_game_shovelers
-    away_games = @games_repo.games_containing(:away_team_id,7)
-    home_games = @games_repo.games_containing(:home_team_id, 7)
+    away_games = @games_repo.games_containing(:away_team_id,7, @games_repo.games)
+    home_games = @games_repo.games_containing(:home_team_id, 7,@games_repo.games)
     assert_instance_of Array, @games_repo.away_games_shoveler(away_games)
     assert_instance_of Array, @games_repo.home_games_shoveler(home_games)
   end
@@ -98,7 +108,7 @@ class GamesRepoTest < Minitest::Test
   end
 
   def test_win_percentage
-    games = @games_repo.games_containing(:home_team_id, 3)
+    games = @games_repo.games_containing(:home_team_id, 3, @games_repo.games)
     @games_repo.away_games_shoveler(games)
     assert_equal 0.38, @games_repo.win_percentage(@games_repo.rival_games)
   end
